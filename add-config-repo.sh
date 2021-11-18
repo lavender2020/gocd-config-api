@@ -5,7 +5,7 @@ GOCD_DOMAIN=$1
 GOCD_ACCESS_TOKEN=$2
 REPO_ID=$3
 CONFIG_REPO_URL=$4
-PATTERN=${5:-**/*.gocd.yaml}
+PATTERN=${5:-*.yaml}
 
 if [[ -z $GOCD_DOMAIN ]]; then
  echo "Please supply the GoCD domain"
@@ -17,12 +17,12 @@ if [[ -z $GOCD_ACCESS_TOKEN ]]; then
  exit 1
 fi
 
-curl --insecure "https://${GOCD_DOMAIN}/go/api/admin/config_repos/${REPO_ID}" \
+curl --insecure "http://${GOCD_DOMAIN}/go/api/admin/config_repos/${REPO_ID}" \
       -H "Authorization: Bearer $GOCD_ACCESS_TOKEN" \
       -H 'Accept: application/vnd.go.cd.v2+json' \
       -X DELETE
 
-curl --insecure "https://${GOCD_DOMAIN}/go/api/admin/config_repos" \
+curl --insecure "http://${GOCD_DOMAIN}/go/api/admin/config_repos" \
   -H "Authorization: Bearer $GOCD_ACCESS_TOKEN" \
   -H 'Accept:application/vnd.go.cd.v2+json' \
   -H 'Content-Type:application/json' \
